@@ -6,6 +6,7 @@ build:
 
 test:
 	@echo "Testing"
+	cd test && cucumber
 
 push:
 	@echo "======= PUSHING CONTAINER ======\n"
