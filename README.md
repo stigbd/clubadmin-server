@@ -3,7 +3,7 @@ clubadmin-server
 
 A simple server with a restful API to manage club memebership
 
-*Test
+#Test
 Prerequisites:
 - cucumber `sudo apt-get install cucumber`
 
