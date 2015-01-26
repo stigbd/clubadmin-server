@@ -48,9 +48,7 @@ public class ServiceTest {
         Service instance = new Service();
         HashMap<Long, Member> expResult = null;
         HashMap<Long, Member> result = instance.listMembers();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
     }
 
     /**
@@ -62,11 +60,10 @@ public class ServiceTest {
         Member member = new Member();
         member.setFirstName("Stig");
         Service instance = new Service();
-        Long expResult = null;
+        Long expResult = new Long(12);
         Long result = instance.createMember(member);
+        assertNotNull(result);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -75,13 +72,12 @@ public class ServiceTest {
     @Test
     public void testRetrieveMember() {
         System.out.println("retrieveMember");
-        Long id = null;
+        Long id = new Long(12);
         Service instance = new Service();
         Member expResult = null;
         Member result = instance.retrieveMember(id);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
+        assertEquals(expResult, result.getId());
     }
     
 }
