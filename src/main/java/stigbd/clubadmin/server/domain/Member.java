@@ -5,24 +5,16 @@
  */
 package stigbd.clubadmin.server.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.xml.bind.annotation.XmlRootElement;
-import java.io.Serializable;
+import org.bson.types.ObjectId;
+import org.mongodb.morphia.annotations.*;
 
-/**
- *
- * @author sbd
- */
-@Entity
-@XmlRootElement
-public class Member implements Serializable {
-    private static final long serialVersionUID = 1L;
+@Entity("members")
+@Indexes(
+        @Index(value = "salary", fields = @Field("salary"))
+)
+public class Member {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private ObjectId id;
     private String firstName;
     private String lastName;
 
@@ -42,34 +34,12 @@ public class Member implements Serializable {
         this.lastName = lastName;
     }
 
-    public Long getId() {
+    public ObjectId getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(ObjectId id) {
         this.id = id;
-    }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
     }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Member)) {
-            return false;
-        }
-        Member other = (Member) object;
-        return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
-    }
-
-    @Override
-    public String toString() {
-        return "Member[ id=" + id + " ]";
-    }
-    
 }

@@ -5,10 +5,13 @@
  */
 package stigbd.clubadmin.server.service;
 
+import org.bson.types.ObjectId;
 import org.junit.*;
 import stigbd.clubadmin.server.domain.Member;
+import stigbd.clubadmin.server.repository.Repository;
+import stigbd.clubadmin.server.repository.RepositoryMock;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -17,12 +20,14 @@ import static org.junit.Assert.*;
  * @author sbd
  */
 public class ServiceTest {
-    
+    static Repository repository;
+
     public ServiceTest() {
     }
     
     @BeforeClass
     public static void setUpClass() {
+        repository = new RepositoryMock();
     }
     
     @AfterClass
@@ -44,8 +49,9 @@ public class ServiceTest {
     public void testListMembers() {
         System.out.println("listMembers");
         Service instance = new Service();
-        ArrayList<Member> expResult = null;
-        ArrayList<Member> result = instance.listMembers();
+        Service.setREPOSITORY(repository);
+        List<Member> expResult = null;
+        List<Member> result = instance.listMembers();
         assertNotNull(result);
     }
 
@@ -58,10 +64,9 @@ public class ServiceTest {
         Member member = new Member();
         member.setFirstName("Stig");
         Service instance = new Service();
-        Long expResult = (long) 1;
-        Long result = instance.createMember(member);
+        Service.setREPOSITORY(repository);
+        String result = instance.createMember(member);
         assertNotNull(result);
-        assertEquals(expResult, result);
     }
 
     /**
@@ -70,12 +75,20 @@ public class ServiceTest {
     @Test
     public void testRetrieveMember() {
         System.out.println("retrieveMember");
-        Long id = (long) 1;
         Service instance = new Service();
-        Member result = instance.retrieveMember(id);
+        Service.setREPOSITORY(repository);
+        Member m = testMember();
+        instance.createMember(m);
+        Member result = instance.retrieveMember(m.getId().toString());
         assertNotNull(result);
-        assertEquals(id, result.getId());
+        assertEquals(m.getId(), result.getId());
         assertTrue("Stig".equals(result.getFirstName()));
     }
-    
+
+    private static Member testMember() {
+        Member m = new Member();
+        m.setId(new ObjectId());
+        m.setFirstName("Stig");
+        return m;
+    }
 }

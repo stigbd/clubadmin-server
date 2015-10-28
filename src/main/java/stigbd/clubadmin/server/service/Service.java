@@ -8,7 +8,7 @@ package stigbd.clubadmin.server.service;
 import stigbd.clubadmin.server.domain.Member;
 import stigbd.clubadmin.server.repository.Repository;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -16,20 +16,25 @@ import java.util.ArrayList;
  */
 public class Service {
 
-    private static final Repository REPOSITORY = new Repository();
+    private static Repository REPOSITORY;
 
-    public ArrayList<Member> listMembers() {
+    public static void setREPOSITORY(Repository r) {
+        REPOSITORY = r;
+    }
+
+
+    public List<Member> listMembers() {
         return REPOSITORY.listMembers();
     }
-    
-    public Long createMember (Member member) {
+
+    public String createMember(Member member) {
 
         return REPOSITORY.createMember(member);
     }
-    
-    public Member retrieveMember(Long id) {
 
-        return REPOSITORY.retrieveMember(id);
+    public Member retrieveMember(String id) {
+
+        return REPOSITORY.retrieveMemberById(id);
     }
     
 }

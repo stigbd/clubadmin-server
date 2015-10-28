@@ -6,6 +6,7 @@
 package stigbd.clubadmin.server.rest;
 
 import stigbd.clubadmin.server.domain.Member;
+import stigbd.clubadmin.server.repository.RepositoryDefault;
 import stigbd.clubadmin.server.service.Service;
 
 import javax.ws.rs.*;
@@ -24,6 +25,10 @@ public class MemberResource {
 
     private static final Service SERVICE = new Service();
 
+    static {
+        Service.setREPOSITORY(new RepositoryDefault());
+    }
+
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     public Response getMembersJSON() {
@@ -38,7 +43,7 @@ public class MemberResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createMember(Member member) {
 
-        Long id = SERVICE.createMember(member);
+        String id = SERVICE.createMember(member);
         URI uri = URI.create("member/" + id);
 
         return Response.created(uri).build();
@@ -49,7 +54,7 @@ public class MemberResource {
     @Path("/{id}")
     @GET
     @Produces({MediaType.APPLICATION_JSON})
-    public Response getMemberById(@PathParam("id") Long id) {
+    public Response getMemberById(@PathParam("id") String id) {
 
         Member member = SERVICE.retrieveMember(id);
         if (member != null) {
