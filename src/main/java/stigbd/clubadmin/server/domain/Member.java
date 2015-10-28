@@ -10,7 +10,7 @@ import org.mongodb.morphia.annotations.*;
 
 @Entity("members")
 @Indexes(
-        @Index(value = "salary", fields = @Field("salary"))
+        @Index(value = "lastName", fields = @Field("lastName"))
 )
 public class Member {
     @Id
