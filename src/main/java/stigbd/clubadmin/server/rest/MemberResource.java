@@ -5,14 +5,15 @@
  */
 package stigbd.clubadmin.server.rest;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import stigbd.clubadmin.server.domain.Member;
+import stigbd.clubadmin.server.service.Service;
+
+import javax.ws.rs.*;
+import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import stigbd.clubadmin.domain.Member;
-import stigbd.clubadmin.server.service.Service;
+import java.net.URI;
+import java.util.List;
 
 /**
  *
@@ -23,19 +24,27 @@ public class MemberResource {
 
     private static final Service SERVICE = new Service();
 
-    /**
-     * Method processing HTTP GET requests, producing "text/turtle" MIME media
-     * type.
-     *
-     * @return String that will be send back as a response of type
-     * "text/turtle".
-     */
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     public Response getMembersJSON() {
 
-        return Response.ok(SERVICE.listMembers()).build();
+        List<Member> members = SERVICE.listMembers();
+        GenericEntity<List<Member>> list = new GenericEntity<List<Member>>(members) {
+        };
+        return Response.ok(list).build();
     }
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response createMember(Member member) {
+
+        Long id = SERVICE.createMember(member);
+        URI uri = URI.create("member/" + id);
+
+        return Response.created(uri).build();
+    }
+
+
 
     @Path("/{id}")
     @GET

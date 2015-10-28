@@ -5,14 +5,12 @@
  */
 package stigbd.clubadmin.server.service;
 
-import java.util.HashMap;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
+import stigbd.clubadmin.server.domain.Member;
+
+import java.util.ArrayList;
+
 import static org.junit.Assert.*;
-import stigbd.clubadmin.domain.Member;
 
 /**
  *
@@ -46,8 +44,8 @@ public class ServiceTest {
     public void testListMembers() {
         System.out.println("listMembers");
         Service instance = new Service();
-        HashMap<Long, Member> expResult = null;
-        HashMap<Long, Member> result = instance.listMembers();
+        ArrayList<Member> expResult = null;
+        ArrayList<Member> result = instance.listMembers();
         assertNotNull(result);
     }
 
@@ -60,7 +58,7 @@ public class ServiceTest {
         Member member = new Member();
         member.setFirstName("Stig");
         Service instance = new Service();
-        Long expResult = new Long(12);
+        Long expResult = (long) 1;
         Long result = instance.createMember(member);
         assertNotNull(result);
         assertEquals(expResult, result);
@@ -72,12 +70,12 @@ public class ServiceTest {
     @Test
     public void testRetrieveMember() {
         System.out.println("retrieveMember");
-        Long id = new Long(12);
+        Long id = (long) 1;
         Service instance = new Service();
-        Member expResult = null;
         Member result = instance.retrieveMember(id);
         assertNotNull(result);
-        assertEquals(expResult, result.getId());
+        assertEquals(id, result.getId());
+        assertTrue("Stig".equals(result.getFirstName()));
     }
     
 }

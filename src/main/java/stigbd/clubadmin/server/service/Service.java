@@ -5,31 +5,31 @@
  */
 package stigbd.clubadmin.server.service;
 
-import java.util.HashMap;
-import stigbd.clubadmin.domain.Member;
+import stigbd.clubadmin.server.domain.Member;
+import stigbd.clubadmin.server.repository.Repository;
+
+import java.util.ArrayList;
 
 /**
  *
  * @author sbd
  */
 public class Service {
-    
-    public HashMap<Long, Member> listMembers() {
-        return new HashMap<Long, Member> ();
+
+    private static final Repository REPOSITORY = new Repository();
+
+    public ArrayList<Member> listMembers() {
+        return REPOSITORY.listMembers();
     }
     
     public Long createMember (Member member) {
-        return new Long(12);
+
+        return REPOSITORY.createMember(member);
     }
     
     public Member retrieveMember(Long id) {
-        if (id == 12) {
-            Member m = new Member();
-        m.setFirstName("Stig B.");
-        m.setLastName("Dørmænen");
-            return m;
-        }
-        return null;
+
+        return REPOSITORY.retrieveMember(id);
     }
     
 }
