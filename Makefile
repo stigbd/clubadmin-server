@@ -9,10 +9,17 @@ test:
 	@echo "Testing"
 	cd test && cucumber
 
-run:
-	docker run  --name clubadmin-server -v /home/sbd/src/stigbd/clubadmin-server/target:/target  -d -p 8080:8080 stigbd/clubadmin-server
+run-db:
+	docker run -d -p 27017:27017 --name mongo mongo
 
-stop:
+run: run-db
+	docker run  --name clubadmin-server --link mongo:mongo -v /home/sbd/src/stigbd/clubadmin-server/target:/target  -d -p 8080:8080 stigbd/clubadmin-server
+
+stop-db:
+	docker stop mongo
+	docker rm mongo
+
+stop: stop-db
 	docker stop clubadmin-server
 	docker rm clubadmin-server
 

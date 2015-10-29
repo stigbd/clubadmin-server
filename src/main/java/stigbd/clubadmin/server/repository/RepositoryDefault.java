@@ -13,7 +13,7 @@ import java.util.List;
 public class RepositoryDefault implements Repository {
 
     static final Morphia morphia = new Morphia();
-    static final Datastore datastore = morphia.createDatastore(new MongoClient(), "stigbd_clubadmin");
+    static final Datastore datastore = morphia.createDatastore(new MongoClient("mongo"), "stigbd_clubadmin");
 
     static {
 
