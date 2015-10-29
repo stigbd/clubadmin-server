@@ -79,7 +79,7 @@ public class ServiceTest {
         Service.setREPOSITORY(repository);
         Member m = testMember();
         instance.createMember(m);
-        Member result = instance.retrieveMember(m.getId().toString());
+        Member result = instance.retrieveMember(m.getId());
         assertNotNull(result);
         assertEquals(m.getId(), result.getId());
         assertTrue("Stig".equals(result.getFirstName()));
@@ -87,7 +87,7 @@ public class ServiceTest {
 
     private static Member testMember() {
         Member m = new Member();
-        m.setId(new ObjectId());
+        m.setId(new ObjectId().toString());
         m.setFirstName("Stig");
         return m;
     }

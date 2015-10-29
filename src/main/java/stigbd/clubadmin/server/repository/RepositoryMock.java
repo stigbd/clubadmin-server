@@ -19,7 +19,7 @@ public class RepositoryMock implements Repository {
     @Override
     public String createMember(Member member) {
         ObjectId id = new ObjectId();
-        member.setId(id);
+        member.setId(id.toString());
         members.put(id, member);
         return id.toString();
     }

@@ -5,7 +5,6 @@
  */
 package stigbd.clubadmin.server.domain;
 
-import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.*;
 
 @Entity("members")
@@ -14,7 +13,7 @@ import org.mongodb.morphia.annotations.*;
 )
 public class Member {
     @Id
-    private ObjectId id;
+    private String id;
     private String firstName;
     private String lastName;
 
@@ -34,11 +33,11 @@ public class Member {
         this.lastName = lastName;
     }
 
-    public ObjectId getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(ObjectId id) {
+    public void setId(String id) {
         this.id = id;
 
     }

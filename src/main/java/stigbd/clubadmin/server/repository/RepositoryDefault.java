@@ -36,15 +36,15 @@ public class RepositoryDefault implements Repository {
     @Override
     public String createMember(Member member) {
         ObjectId id = new ObjectId();
-        member.setId(id);
+        member.setId(id.toString());
         datastore.save(member);
-        return id.toString();
+        return member.getId();
     }
 
     @Override
     public Member retrieveMemberById(String id) {
 
-        ObjectId oid = new ObjectId(id);
-        return datastore.find(Member.class).field("id").equal(oid).get();
+        //ObjectId oid = new ObjectId(id);
+        return datastore.find(Member.class).field("id").equal(id).get();
     }
 }
