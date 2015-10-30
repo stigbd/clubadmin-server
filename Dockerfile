@@ -1,5 +1,5 @@
-## -*- docker-image-name: "clubadmin-server" -*-
-# Clubadmin-server
+## -*- docker-image-name: "clubmemberservice" -*-
+# clubmemberService
 #
 # Version 1
 

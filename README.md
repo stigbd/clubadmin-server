@@ -1,11 +1,12 @@
-clubadmin-server
+ClubMember Service
 ================
 
-A simple server with a restful API to manage club memebership
+A simple service with a restful API to manage club membership
 
 #Test
 Prerequisites:
 - cucumber `sudo apt-get install cucumber`
+- docker
 
 To run the test, do 
 ```

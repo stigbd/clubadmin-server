@@ -1,6 +1,6 @@
-package stigbd.clubadmin.server.repository;
+package stigbd.clubmemberservice.repository;
 
-import stigbd.clubadmin.server.domain.Member;
+import stigbd.clubmemberservice.domain.Member;
 
 import java.util.List;
 

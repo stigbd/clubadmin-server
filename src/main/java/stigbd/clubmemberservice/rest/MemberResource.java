@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package stigbd.clubadmin.server.rest;
+package stigbd.clubmemberservice.rest;
 
-import stigbd.clubadmin.server.domain.Member;
-import stigbd.clubadmin.server.repository.RepositoryDefault;
-import stigbd.clubadmin.server.service.Service;
+import stigbd.clubmemberservice.domain.Member;
+import stigbd.clubmemberservice.repository.RepositoryDefault;
+import stigbd.clubmemberservice.service.Service;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.GenericEntity;
@@ -20,7 +20,7 @@ import java.util.List;
  *
  * @author sbd
  */
-@Path("member/")
+@Path("/")
 public class MemberResource {
 
     private static final Service SERVICE = new Service();
@@ -44,7 +44,7 @@ public class MemberResource {
     public Response createMember(Member member) {
 
         String id = SERVICE.createMember(member);
-        URI uri = URI.create("member/" + id);
+        URI uri = URI.create(id);
 
         return Response.created(uri).build();
     }

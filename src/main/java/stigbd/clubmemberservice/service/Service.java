@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package stigbd.clubadmin.server.service;
+package stigbd.clubmemberservice.service;
 
-import stigbd.clubadmin.server.domain.Member;
-import stigbd.clubadmin.server.repository.Repository;
+import stigbd.clubmemberservice.domain.Member;
+import stigbd.clubmemberservice.repository.Repository;
 
 import java.util.List;
 
