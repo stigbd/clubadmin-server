@@ -1,21 +1,18 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package stigbd.clubmemberservice.domain;
 
 import org.mongodb.morphia.annotations.*;
 
 @Entity("members")
-@Indexes(
-        @Index(value = "lastName", fields = @Field("lastName"))
+@Indexes({
+        @Index(value = "lastName", fields = @Field("lastName")),
+        @Index(value = "email", fields = @Field("email"))}
 )
 public class Member {
     @Id
     private String id;
     private String firstName;
     private String lastName;
+    private String email;
 
     public String getFirstName() {
         return firstName;

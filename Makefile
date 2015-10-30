@@ -14,6 +14,7 @@ run:
 
 stop:
 	docker-compose stop
+	docker-compose rm -f
 
 push:
 	@echo "======= PUSHING CONTAINER ======\n"
