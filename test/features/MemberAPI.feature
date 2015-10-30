@@ -14,3 +14,4 @@ Feature: Member API
     Then a Created status should be returned
     When the client gets the member by header location
     Then the saved member matches the inputs
+    And the saved member has an id
