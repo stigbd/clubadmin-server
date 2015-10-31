@@ -30,4 +30,14 @@ public class RepositoryMock implements Repository {
         ObjectId oid = new ObjectId(id);
         return members.get(oid);
     }
+
+    @Override
+    public Member updateMemberById(String id, Member member) {
+        return null;
+    }
+
+    @Override
+    public String deleteMemberById(String id) {
+        return null;
+    }
 }

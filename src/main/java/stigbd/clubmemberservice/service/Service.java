@@ -13,8 +13,8 @@ public class Service {
         REPOSITORY = r;
     }
 
-
     public List<Member> listMembers() {
+
         return REPOSITORY.listMembers();
     }
 
@@ -27,5 +27,14 @@ public class Service {
 
         return REPOSITORY.retrieveMemberById(id);
     }
-    
+
+    public Member changeMember(String id, Member member) {
+
+        return REPOSITORY.updateMemberById(id, member);
+    }
+
+    public String removeMember(String id) {
+
+        return REPOSITORY.deleteMemberById(id);
+    }
 }

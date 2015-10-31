@@ -26,7 +26,7 @@ public class MemberResource {
 
     @GET
     @Produces({MediaType.APPLICATION_JSON})
-    public Response getMembersJSON() {
+    public Response getMembers() {
 
         List<Member> members = SERVICE.listMembers();
         GenericEntity<List<Member>> list = new GenericEntity<List<Member>>(members) {
@@ -44,8 +44,6 @@ public class MemberResource {
         return Response.created(uri).build();
     }
 
-
-
     @Path("/{id}")
     @GET
     @Produces({MediaType.APPLICATION_JSON})
@@ -54,6 +52,33 @@ public class MemberResource {
         Member member = SERVICE.retrieveMember(id);
         if (member != null) {
             return Response.ok(member).build();
+        }
+        return Response
+                .status(Response.Status.NOT_FOUND)
+                .build();
+    }
+
+    @Path("/{id}")
+    @PUT
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Response putMemberById(@PathParam("id") String id, Member member) {
+
+        Member m = SERVICE.changeMember(id, member);
+        if (m != null) {
+            return Response.noContent().build();
+        }
+        return Response
+                .status(Response.Status.NOT_FOUND)
+                .build();
+    }
+
+    @Path("/{id}")
+    @DELETE
+    public Response deleteMemberById(@PathParam("id") String id) {
+
+        String deletedId = SERVICE.removeMember(id);
+        if (deletedId != null) {
+            return Response.noContent().build();
         }
         return Response
                 .status(Response.Status.NOT_FOUND)

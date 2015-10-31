@@ -11,4 +11,8 @@ public interface Repository {
     String createMember(Member member);
 
     Member retrieveMemberById(String id);
+
+    Member updateMemberById(String id, Member member);
+
+    String deleteMemberById(String id);
 }

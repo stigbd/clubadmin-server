@@ -1,5 +1,5 @@
 .PHONY: test
-all: build test push
+all: stop build run test push
 
 build:
 	@echo "Building"
@@ -11,6 +11,7 @@ test:
 
 run:
 	docker-compose up -d
+	sleep 30
 
 stop:
 	docker-compose stop
