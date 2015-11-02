@@ -1,8 +1,8 @@
 package stigbd.clubmemberservice.repository;
 
 import com.mongodb.MongoClient;
-import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
+import org.mongodb.morphia.Key;
 import org.mongodb.morphia.Morphia;
 import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateOperations;
@@ -13,8 +13,8 @@ import java.util.List;
 
 public class RepositoryDefault implements Repository {
 
-    static final Morphia morphia = new Morphia();
-    static final Datastore datastore = morphia.createDatastore(new MongoClient("mongo"), "clubmember");
+        static final Morphia morphia = new Morphia();
+        static final Datastore datastore = morphia.createDatastore(new MongoClient("mongo"), "clubmember");
 
     static {
 
@@ -36,16 +36,20 @@ public class RepositoryDefault implements Repository {
 
     @Override
     public String createMember(Member member) {
-        ObjectId id = new ObjectId();
-        member.setId(id.toString());
+
         datastore.save(member);
-        return member.getId();
+
+        return member.getId().toString();
     }
 
     @Override
     public Member retrieveMemberById(String id) {
 
-        return datastore.find(Member.class).field("id").equal(id).get();
+        Member m = datastore.find(Member.class).field("id").equal(id).get();
+
+        Key<Member> key = datastore.getKey(m);
+        System.out.println("DEBUG---: Member retrieved->" + key.toString());
+        return m;
     }
 
     @Override
@@ -82,7 +86,11 @@ public class RepositoryDefault implements Repository {
         if (member.getMemberSince() != null) {
             ops.set("memberSince", member.getMemberSince());
         }
+        if (member.getMainMember() != null) {
+            ops.set("mainMember", member.getMainMember());
+        }
 
+        System.out.println("DEBUG---:" + datastore.getKey(member));
 
         if (ops != null) {
             datastore.update(updateQuery, ops);

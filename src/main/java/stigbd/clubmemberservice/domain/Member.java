@@ -1,6 +1,11 @@
 package stigbd.clubmemberservice.domain;
 
+import org.bson.types.ObjectId;
+import org.mongodb.morphia.Key;
 import org.mongodb.morphia.annotations.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity("members")
 @Indexes({
@@ -9,7 +14,7 @@ import org.mongodb.morphia.annotations.*;
 )
 public class Member {
     @Id
-    private String id;
+    private ObjectId id;
     private String firstName;
     private String lastName;
     private String email;
@@ -18,6 +23,19 @@ public class Member {
     private String mobile;
     private String active;
     private String memberSince;
+    //references can be saved without automatic loading
+    private Key<Member> mainMember;
+    //refs are stored**, and loaded automatically
+    @Reference
+    private List<Member> familyMembers = new ArrayList<Member>();
+
+    public Key<Member> getMainMember() {
+        return mainMember;
+    }
+
+    public void setMainMember(Key<Member> mainMember) {
+        this.mainMember = mainMember;
+    }
 
     public String getActive() {
         return active;
@@ -83,11 +101,11 @@ public class Member {
         this.lastName = lastName;
     }
 
-    public String getId() {
+    public ObjectId getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(ObjectId id) {
         this.id = id;
 
     }

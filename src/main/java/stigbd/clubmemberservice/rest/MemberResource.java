@@ -1,8 +1,8 @@
 package stigbd.clubmemberservice.rest;
 
 import stigbd.clubmemberservice.domain.Member;
-import stigbd.clubmemberservice.repository.RepositoryDefault;
 import stigbd.clubmemberservice.service.Service;
+import stigbd.clubmemberservice.service.ServiceDefault;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.GenericEntity;
@@ -18,17 +18,14 @@ import java.util.List;
 @Path("/")
 public class MemberResource {
 
-    private static final Service SERVICE = new Service();
+    private static final Service SERVICE_DEFAULT = new ServiceDefault();
 
-    static {
-        Service.setREPOSITORY(new RepositoryDefault());
-    }
 
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     public Response getMembers() {
 
-        List<Member> members = SERVICE.listMembers();
+        List<Member> members = SERVICE_DEFAULT.listMembers();
         GenericEntity<List<Member>> list = new GenericEntity<List<Member>>(members) {
         };
         return Response.ok(list).build();
@@ -38,7 +35,7 @@ public class MemberResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createMember(Member member) {
 
-        String id = SERVICE.createMember(member);
+        String id = SERVICE_DEFAULT.createMember(member);
         URI uri = URI.create(id);
 
         return Response.created(uri).build();
@@ -49,7 +46,7 @@ public class MemberResource {
     @Produces({MediaType.APPLICATION_JSON})
     public Response getMemberById(@PathParam("id") String id) {
 
-        Member member = SERVICE.retrieveMember(id);
+        Member member = SERVICE_DEFAULT.retrieveMember(id);
         if (member != null) {
             return Response.ok(member).build();
         }
@@ -63,8 +60,8 @@ public class MemberResource {
     @Consumes({MediaType.APPLICATION_JSON})
     public Response putMemberById(@PathParam("id") String id, Member member) {
 
-        Member m = SERVICE.changeMember(id, member);
-        if (m != null) {
+        String updatedId = SERVICE_DEFAULT.changeMember(id, member);
+        if (updatedId != null) {
             return Response.noContent().build();
         }
         return Response
@@ -76,7 +73,7 @@ public class MemberResource {
     @DELETE
     public Response deleteMemberById(@PathParam("id") String id) {
 
-        String deletedId = SERVICE.removeMember(id);
+        String deletedId = SERVICE_DEFAULT.removeMember(id);
         if (deletedId != null) {
             return Response.noContent().build();
         }
