@@ -43,29 +43,3 @@ Feature: Member API
     Then a "204" status should be returned
     When the client gets the member
     Then a "404" status should be returned
-
-  Scenario: Create relation between one member and another family-member
-    Given the following member-information exists
-      | firstName | Daughter |
-      | lastName  | Doe  |
-    And the following member-information exists
-      | firstName | Mother |
-      | lastName  | Doe  |
-    When the client puts the following updated information to "http://localhost:8080/ClubMemberService/" plus id
-      | firstName | Daughter      |
-      | lastName  | Doe      |
-      | mainMember  | <idOfMother>           |
-    Then a "204" status should be returned
-    When the client gets the member
-    Then the member should contain the updated information
-
-
-  Scenario: Create relation between one member and a non existing member
-    Given the following member-information exists
-      | firstName | Daughter |
-      | lastName  | Doe  |
-    When the client puts the following updated information to "http://localhost:8080/ClubMemberService/" plus id
-      | firstName | Daughter      |
-      | lastName  | Doe      |
-      | mainMember  | <someId>           |
-    Then a "422" status should be returned
