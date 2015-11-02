@@ -10,6 +10,7 @@ import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,7 +28,11 @@ public class MemberResource {
     public Response getMembers() {
 
         List<Member> members = SERVICE_DEFAULT.listMembers();
-        GenericEntity<List<Member>> list = new GenericEntity<List<Member>>(members) {
+        List<MemberRepresentation> memberRepresentationList = new ArrayList<MemberRepresentation>();
+        for (Member m: members) {
+            memberRepresentationList.add(new MemberRepresentation(m));
+        }
+        GenericEntity<List<MemberRepresentation>> list = new GenericEntity<List<MemberRepresentation>>(memberRepresentationList) {
         };
         return Response.ok(list).build();
     }
