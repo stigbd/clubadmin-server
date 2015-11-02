@@ -3,11 +3,11 @@ all: stop build run sleep test push
 
 build:
 	@echo "Building"
-	mvn clean install
+	mvn clean package
 
 test:
 	@echo "Testing"
-	cd test && cucumber
+	mvn verify
 
 run:
 	docker-compose up -d

@@ -8,7 +8,7 @@ Feature: Member API
 
   Scenario: Create new member
     Given the following member-information
-      | firstName | John              |
+      | firstName | John|
       | lastName  | Doe               |
       | email     | email@example.com |
       | sex         | M                 |
@@ -19,27 +19,28 @@ Feature: Member API
     When the client posts the input to "http://localhost:8080/ClubMemberService/"
     Then a "201" status should be returned
     When the client gets the member by header location
-    Then the saved member matches the inputs
+    Then a "200" status should be returned
+    And the saved member matches the inputs
     And the saved member has an id
 
   Scenario: Update an existing member
     Given the following member-information exists
       | firstName | Jane |
       | lastName  | Doe  |
-    When the client puts the following updated information to "http://localhost:8080/ClubMemberService/" plus id
+    When the client puts the following updated information
       | firstName | Jane Changed      |
       | lastName  | Does changed      |
       | sex       | F added           |
       | email     | added@example.com |
     Then a "204" status should be returned
-    When the client gets the member
+    When the client gets the member by header location
     Then the member should contain the updated information
 
   Scenario: Remove an existing member
     Given the following member-information exists
       | firstName | Jane |
       | lastName  | Doe  |
-    When the client deletes the member to "http://localhost:8080/ClubMemberService/" plus id
+    When the client deletes the member
     Then a "204" status should be returned
-    When the client gets the member
+    When the client gets the member by header location
     Then a "404" status should be returned
