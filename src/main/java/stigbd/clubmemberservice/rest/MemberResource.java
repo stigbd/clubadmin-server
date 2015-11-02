@@ -1,6 +1,7 @@
 package stigbd.clubmemberservice.rest;
 
 import stigbd.clubmemberservice.domain.Member;
+import stigbd.clubmemberservice.representation.MemberRepresentation;
 import stigbd.clubmemberservice.service.Service;
 import stigbd.clubmemberservice.service.ServiceDefault;
 
@@ -48,7 +49,8 @@ public class MemberResource {
 
         Member member = SERVICE_DEFAULT.retrieveMember(id);
         if (member != null) {
-            return Response.ok(member).build();
+            MemberRepresentation memberRepresentation = new MemberRepresentation(member);
+            return Response.ok(memberRepresentation).build();
         }
         return Response
                 .status(Response.Status.NOT_FOUND)
