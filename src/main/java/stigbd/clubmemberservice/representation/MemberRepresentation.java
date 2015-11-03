@@ -4,8 +4,12 @@ import stigbd.clubmemberservice.domain.Member;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class MemberRepresentation {
+    final Logger logger = Logger.getLogger(MemberRepresentation.class.getName());
+
     private String id;
     private String firstName;
     private String lastName;
@@ -15,8 +19,8 @@ public class MemberRepresentation {
     private String mobile;
     private String active;
     private String memberSince;
-    private MemberRepresentation mainMember;
-    private List<MemberRepresentation> familyMembers = new ArrayList<MemberRepresentation>();
+    private MemberIdRepresentation mainMemberId;
+    private List<MemberIdRepresentation> familyMemberIds = null;
 
     public MemberRepresentation(){
 
@@ -33,15 +37,33 @@ public class MemberRepresentation {
         this.active = m.getActive();
         this.memberSince = m.getMemberSince();
 
+        if (m.getMainMember() != null) {
+            this.mainMemberId = new MemberIdRepresentation(m.getMainMember());
+        }
+
+        if (m.getFamilyMembers() != null && m.getFamilyMembers().size() > 0) {
+            logger.log(Level.INFO, "m.getFamilyMembers ->" + m.getFamilyMembers());
+            this.familyMemberIds = new ArrayList<>();
+            for (Member familyMember : m.getFamilyMembers()) {
+                this.familyMemberIds.add(new MemberIdRepresentation(familyMember));
+            }
+        }
     }
 
 
-    public MemberRepresentation getMainMember() {
-        return mainMember;
+    public MemberIdRepresentation getMainMember() {
+        return mainMemberId;
+    }
+    public void setMainMember(MemberIdRepresentation mainMemberId) {
+        this.mainMemberId = mainMemberId;
     }
 
-    public void setMainMember(MemberRepresentation mainMember) {
-        this.mainMember = mainMember;
+    public List<MemberIdRepresentation> getFamilyMembers() {
+        return familyMemberIds;
+    }
+
+    public void setFamilyMembers(List<MemberIdRepresentation> familyMembers) {
+        this.familyMemberIds = familyMembers;
     }
 
     public String getActive() {

@@ -1,10 +1,8 @@
 package stigbd.clubmemberservice.domain;
 
 import org.bson.types.ObjectId;
-import org.mongodb.morphia.Key;
 import org.mongodb.morphia.annotations.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity("members")
@@ -23,17 +21,16 @@ public class Member {
     private String mobile;
     private String active;
     private String memberSince;
-    //references can be saved without automatic loading
-    private Key<Member> mainMember;
-    //refs are stored**, and loaded automatically
     @Reference
-    private List<Member> familyMembers = new ArrayList<Member>();
+    private Member mainMember;
+    @Reference
+    private List<Member> familyMembers = null;
 
-    public Key<Member> getMainMember() {
+    public Member getMainMember() {
         return mainMember;
     }
 
-    public void setMainMember(Key<Member> mainMember) {
+    public void setMainMember(Member mainMember) {
         this.mainMember = mainMember;
     }
 
@@ -109,4 +106,13 @@ public class Member {
         this.id = id;
 
     }
+
+    public List<Member> getFamilyMembers() {
+        return familyMembers;
+    }
+
+    public void setFamilyMembers(List<Member> familyMembers) {
+        this.familyMembers = familyMembers;
+    }
+
 }

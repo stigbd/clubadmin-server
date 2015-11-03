@@ -6,6 +6,7 @@ import org.mongodb.morphia.Morphia;
 import stigbd.clubmemberservice.dao.MemberDAO;
 import stigbd.clubmemberservice.domain.Member;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ServiceDefault implements Service{
@@ -35,8 +36,7 @@ public class ServiceDefault implements Service{
     @Override
     public Member retrieveMember(String id) {
         ObjectId oid = new ObjectId(id);
-        Member m = memberDao.get(oid);
-        return m;
+        return memberDao.get(oid);
     }
 
     @Override
@@ -51,6 +51,39 @@ public class ServiceDefault implements Service{
         ObjectId oid = new ObjectId(id);
         memberDao.deleteById(oid);
         return id;
+    }
+
+    @Override
+    public String createMainMemberRelation(String memberId, String mainMemberId) {
+        if (memberId == null || mainMemberId == null) {
+            return null;
+        }
+        if (memberId.equalsIgnoreCase(mainMemberId)) {
+            return null;
+        }
+
+        // Check if member exist:
+        ObjectId memberOid = new ObjectId(memberId);
+        Member m = memberDao.get(memberOid);
+        // Check if mainMember exist:
+        ObjectId mainMemberOid = new ObjectId(mainMemberId);
+        Member mm = memberDao.get(mainMemberOid);
+        if (m != null && mm != null) {
+            // Set the mainmember of member
+            m.setMainMember(mm);
+            // Add member to mainmember's familymemberlist
+            if (mm.getFamilyMembers() != null) {
+                mm.getFamilyMembers().add(m);
+            } else {
+                mm.setFamilyMembers(new ArrayList<>());
+                mm.getFamilyMembers().add(m);
+            }
+            memberDao.save(m);
+            memberDao.save(mm);
+        } else {
+            return null;
+        }
+        return mm.getId().toString();
     }
 
 }

@@ -1,26 +1,28 @@
 package stigbd.clubmemberservice.rest;
 
 import stigbd.clubmemberservice.domain.Member;
+import stigbd.clubmemberservice.representation.MemberFactory;
+import stigbd.clubmemberservice.representation.MemberIdRepresentation;
 import stigbd.clubmemberservice.representation.MemberRepresentation;
 import stigbd.clubmemberservice.service.Service;
 import stigbd.clubmemberservice.service.ServiceDefault;
 
 import javax.ws.rs.*;
-import javax.ws.rs.core.GenericEntity;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import javax.ws.rs.core.*;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  *
  * @author sbd
  */
-@Path("/")
+@Path("member/")
 public class MemberResource {
 
     private static final Service SERVICE_DEFAULT = new ServiceDefault();
+    final Logger logger = Logger.getLogger(MemberFactory.class.getName());
 
 
     @GET
@@ -28,7 +30,7 @@ public class MemberResource {
     public Response getMembers() {
 
         List<Member> members = SERVICE_DEFAULT.listMembers();
-        List<MemberRepresentation> memberRepresentationList = new ArrayList<MemberRepresentation>();
+        List<MemberRepresentation> memberRepresentationList = new ArrayList<>();
         for (Member m: members) {
             memberRepresentationList.add(new MemberRepresentation(m));
         }
@@ -39,12 +41,15 @@ public class MemberResource {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createMember(Member member) {
+    public Response createMember(MemberRepresentation memberRepresentation,  @Context UriInfo uriInfo) {
 
-        String id = SERVICE_DEFAULT.createMember(member);
-        URI uri = URI.create(id);
-
-        return Response.created(uri).build();
+        Member m = MemberFactory.createMember(memberRepresentation);
+        if (m != null) {
+            String id = SERVICE_DEFAULT.createMember(m);
+            URI uri = uriInfo.getAbsolutePathBuilder().path(id).build();
+            return Response.created(uri).build();
+        }
+        return Response.status(422).build();
     }
 
     @Path("/{id}")
@@ -65,15 +70,20 @@ public class MemberResource {
     @Path("/{id}")
     @PUT
     @Consumes({MediaType.APPLICATION_JSON})
-    public Response putMemberById(@PathParam("id") String id, Member member) {
+    public Response putMemberById(@PathParam("id") String id, MemberRepresentation memberRepresentation) {
 
-        String updatedId = SERVICE_DEFAULT.changeMember(id, member);
-        if (updatedId != null) {
-            return Response.noContent().build();
+        Member m = MemberFactory.createMember(memberRepresentation);
+        if (m != null) {
+            String updatedId = SERVICE_DEFAULT.changeMember(id, m);
+            if (updatedId != null) {
+                return Response.noContent().build();
+            }
+            return Response
+                    .status(Response.Status.NOT_FOUND)
+                    .build();
+        } else {
+            return Response.status(422).build();
         }
-        return Response
-                .status(Response.Status.NOT_FOUND)
-                .build();
     }
 
     @Path("/{id}")
@@ -89,4 +99,20 @@ public class MemberResource {
                 .build();
     }
 
+    @Path("{id}/mainMember/")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response createMainMemberRelation(@PathParam("id") String memberId, MemberIdRepresentation mainMemberIdRepresentation) {
+
+        //logger.log(Level.INFO, "memberId/mainMemberId ->" + memberId + "/" + mainMemberIdRepresentation.getId());
+
+        String id = SERVICE_DEFAULT.createMainMemberRelation(memberId, mainMemberIdRepresentation.getId());
+        if (id != null) {
+            URI uri = URI.create(id);
+
+            return Response.created(uri).build();
+        } else {
+            return Response.status(400).build();
+        }
+    }
 }

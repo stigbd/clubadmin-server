@@ -11,4 +11,5 @@ public interface Service {
     Member retrieveMember(String id);
     String changeMember(String id, Member m);
     String removeMember(String id);
+    String createMainMemberRelation(String memberId, String mainMemberId);
 }

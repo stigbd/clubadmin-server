@@ -16,7 +16,7 @@ Feature: Member API
       | mobile      | 12345678          |
       | active      | true              |
       | memberSince | 01.01.2010        |
-    When the client posts the input to "http://localhost:8080/ClubMemberService/"
+    When the client posts the input to "http://localhost:8080/ClubMemberService/member/"
     Then a "201" status should be returned
     When the client gets the member by header location
     Then a "200" status should be returned
@@ -44,3 +44,17 @@ Feature: Member API
     Then a "204" status should be returned
     When the client gets the member by header location
     Then a "404" status should be returned
+
+  Scenario: Link member to another mainMember
+    Given the following mother member-information exists
+      | firstName | Mother |
+      | lastName  | Doe  |
+    And the following daughter member-information exists
+      | firstName | Daughter |
+      | lastName  | Doe  |
+    When the client posts the mother-member to <daughterId>/mainMember/
+    Then a "201" status should be returned
+    When the client gets the daughter by id
+    Then the mainMember should be the mother
+    When the client gets the mother by id
+    Then the list familyMembers should contain daughterId
