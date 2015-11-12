@@ -58,3 +58,29 @@ Feature: Member API
     Then the mainMember should be the mother
     When the client gets the mother by id
     Then the list familyMembers should contain daughterId
+
+  Scenario: Add family-member to member should work if member is main-member
+    Given the following mother member-information exists
+      | firstName | Mother |
+      | lastName  | Doe  |
+    And the following daughter member-information exists
+      | firstName | Daughter |
+      | lastName  | Doe  |
+    When the client posts the daughter-member to <motherId>/familyMember/
+    Then a "201" status should be returned
+    When the client gets the daughter by id
+    Then the mainMember should be the mother
+    When the client gets the mother by id
+    Then the list familyMembers should contain daughterId
+
+  Scenario: Give unauthorized users a 401
+
+  Scenario: Remove family-member from member
+
+  Scenario: Remove mainMember from member
+
+  Scenario: Get the mainMember from should return ok
+
+  Scenario: Get the list of familyMembers should return ok
+
+  Scenario: Add family-member to anoter family-member should fail

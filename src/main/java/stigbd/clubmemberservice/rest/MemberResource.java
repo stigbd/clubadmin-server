@@ -36,7 +36,7 @@ public class MemberResource {
         }
         GenericEntity<List<MemberRepresentation>> list = new GenericEntity<List<MemberRepresentation>>(memberRepresentationList) {
         };
-        return Response.ok(list).build();
+        return Response.ok(list).header("Access-Control-Allow-Origin", "*").build();
     }
 
     @POST
