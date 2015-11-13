@@ -7,7 +7,11 @@
         <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
         <init-param>
             <param-name>jersey.config.server.provider.packages</param-name>
-            <param-value>stigbd.clubmemberservice</param-value>
+            <param-value>stigbd.clubmemberservice.rest</param-value>
+        </init-param>
+        <init-param>
+            <param-name>jersey.config.server.provider.classnames</param-name>
+            <param-value>stigbd.clubmemberservice.rest.CORSResponseFilter</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>

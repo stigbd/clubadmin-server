@@ -36,7 +36,9 @@ public class MemberResource {
         }
         GenericEntity<List<MemberRepresentation>> list = new GenericEntity<List<MemberRepresentation>>(memberRepresentationList) {
         };
-        return Response.ok(list).header("Access-Control-Allow-Origin", "*").build();
+        return Response
+                .ok(list)
+                .build();
     }
 
     @POST
@@ -47,9 +49,13 @@ public class MemberResource {
         if (m != null) {
             String id = SERVICE_DEFAULT.createMember(m);
             URI uri = uriInfo.getAbsolutePathBuilder().path(id).build();
-            return Response.created(uri).build();
+            return Response
+                    .created(uri)
+                    .build();
         }
-        return Response.status(422).build();
+        return Response
+                .status(422)
+                .build();
     }
 
     @Path("/{id}")
@@ -60,7 +66,9 @@ public class MemberResource {
         Member member = SERVICE_DEFAULT.retrieveMember(id);
         if (member != null) {
             MemberRepresentation memberRepresentation = new MemberRepresentation(member);
-            return Response.ok(memberRepresentation).build();
+            return Response
+                    .ok(memberRepresentation)
+                    .build();
         }
         return Response
                 .status(Response.Status.NOT_FOUND)
@@ -76,13 +84,17 @@ public class MemberResource {
         if (m != null) {
             String updatedId = SERVICE_DEFAULT.changeMember(id, m);
             if (updatedId != null) {
-                return Response.noContent().build();
+                return Response
+                        .noContent()
+                        .build();
             }
             return Response
                     .status(Response.Status.NOT_FOUND)
                     .build();
         } else {
-            return Response.status(422).build();
+            return Response
+                    .status(422)
+                    .build();
         }
     }
 
@@ -92,7 +104,9 @@ public class MemberResource {
 
         String deletedId = SERVICE_DEFAULT.removeMember(id);
         if (deletedId != null) {
-            return Response.noContent().build();
+            return Response.
+                    noContent()
+                    .build();
         }
         return Response
                 .status(Response.Status.NOT_FOUND)
@@ -110,9 +124,13 @@ public class MemberResource {
         if (id != null) {
             URI uri = URI.create(id);
 
-            return Response.created(uri).build();
+            return Response
+                    .created(uri)
+                    .build();
         } else {
-            return Response.status(400).build();
+            return Response
+                    .status(400)
+                    .build();
         }
     }
 }
