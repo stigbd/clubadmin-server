@@ -16,7 +16,7 @@ public class ServiceDefault implements Service{
     // Create a Mongo instance that points to the MongoDB running on local host
 
     static final Morphia morphia = new Morphia();
-    static final MongoClient mongoClient = new MongoClient("mongo");
+    static final MongoClient mongoClient = new MongoClient("clubmemberservice_mongo_1");
 
 
     // Create a DAOs

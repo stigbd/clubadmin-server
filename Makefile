@@ -10,7 +10,7 @@ test:
 	mvn verify
 
 run:
-	docker-compose up -d
+	docker-compose --x-networking up -d
 
 sleep:
 	sleep 30

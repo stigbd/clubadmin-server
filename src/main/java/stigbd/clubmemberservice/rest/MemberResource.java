@@ -12,6 +12,7 @@ import javax.ws.rs.core.*;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -116,13 +117,13 @@ public class MemberResource {
     @Path("{id}/mainMember/")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createMainMemberRelation(@PathParam("id") String memberId, MemberIdRepresentation mainMemberIdRepresentation) {
+    public Response createMainMemberRelation(@PathParam("id") String memberId, MemberIdRepresentation mainMemberIdRepresentation, @Context UriInfo uriInfo) {
 
-        //logger.log(Level.INFO, "memberId/mainMemberId ->" + memberId + "/" + mainMemberIdRepresentation.getId());
+        logger.log(Level.INFO, "memberId/mainMemberId ->" + memberId + "/" + mainMemberIdRepresentation.getId());
 
         String id = SERVICE_DEFAULT.createMainMemberRelation(memberId, mainMemberIdRepresentation.getId());
         if (id != null) {
-            URI uri = URI.create(id);
+            URI uri = uriInfo.getAbsolutePathBuilder().path(id).build();
 
             return Response
                     .created(uri)
@@ -138,13 +139,13 @@ public class MemberResource {
     @Path("{id}/familyMember/")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createFamilyMemberRelation(@PathParam("id") String memberId, MemberIdRepresentation familyMemberIdRepresentation) {
+    public Response createFamilyMemberRelation(@PathParam("id") String memberId, MemberIdRepresentation familyMemberIdRepresentation, @Context UriInfo uriInfo) {
 
-        //logger.log(Level.INFO, "memberId/mainMemberId ->" + memberId + "/" + mainMemberIdRepresentation.getId());
+        logger.log(Level.INFO, "memberId/mainMemberId ->" + memberId + "/" + familyMemberIdRepresentation.getId());
 
         String id = SERVICE_DEFAULT.createMainMemberRelation(familyMemberIdRepresentation.getId(), memberId);
         if (id != null) {
-            URI uri = URI.create(id);
+            URI uri = uriInfo.getAbsolutePathBuilder().path(id).build();
 
             return Response
                     .created(uri)
