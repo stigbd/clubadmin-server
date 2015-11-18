@@ -80,7 +80,7 @@ public class MemberAPIStepsIT {
         Type type = new TypeToken<Map<String, String>>(){}.getType();
         Map<String, String> responseMap = gson.fromJson(responseJsonString, type);
         for (String field : inputMap.keySet()) {
-            assertEquals(responseMap.get(field), inputMap.get(field));
+            assertEquals(inputMap.get(field), responseMap.get(field));
         }
     }
 
@@ -126,7 +126,7 @@ public class MemberAPIStepsIT {
         Type type = new TypeToken<Map<String, String>>(){}.getType();
         Map<String, String> responseMap = gson.fromJson(responseJsonString, type);
         for (String field : inputMap.keySet()) {
-            assertEquals(responseMap.get(field), inputMap.get(field));
+            assertEquals(inputMap.get(field), responseMap.get(field));
         }
     }
 
@@ -245,4 +245,16 @@ public class MemberAPIStepsIT {
         assertTrue(b);
     }
 
+    @When("^the client posts the daughter-member to <motherId>/familyMember/$")
+    public void theClientPostsTheDaughterMemberToMotherIdFamilyMember() throws Throwable {
+        url = headerLocationMother +"/familyMember/";
+        Gson gson = new Gson();
+        Map<String,String> relationMap = new HashMap<>(inputMapDaughter);
+        relationMap.put("id", daughterId);
+        inputJsonString = gson.toJson(relationMap);
+        Response response = client.target(url)
+                .request(MediaType.APPLICATION_JSON)
+                .post(Entity.entity(inputJsonString, MediaType.APPLICATION_JSON));
+        statusCode = Integer.toString(response.getStatus());
+    }
 }

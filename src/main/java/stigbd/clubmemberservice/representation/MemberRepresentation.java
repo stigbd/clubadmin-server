@@ -14,6 +14,7 @@ public class MemberRepresentation {
     private String firstName;
     private String lastName;
     private String email;
+    private String email2;
     private String sex;
     private String birthDate;
     private String mobile;
@@ -31,6 +32,7 @@ public class MemberRepresentation {
         this.firstName = m.getFirstName();
         this.lastName = m.getLastName();
         this.email = m.getEmail();
+        this.email2 = m.getEmail2();
         this.sex = m.getSex();
         this.birthDate = m.getBirthDate();
         this.mobile = m.getMobile();
@@ -112,6 +114,14 @@ public class MemberRepresentation {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getEmail2() {
+        return email2;
+    }
+
+    public void setEmail2(String email2) {
+        this.email2 = email2;
     }
 
     public String getFirstName() {

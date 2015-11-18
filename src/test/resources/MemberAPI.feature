@@ -16,6 +16,7 @@ Feature: Member API
       | mobile      | 12345678          |
       | active      | true              |
       | memberSince | 01.01.2010        |
+    | email2      | email2@example.com |
     When the client posts the input to "http://localhost:8080/ClubMemberService/member/"
     Then a "201" status should be returned
     When the client gets the member by header location
@@ -79,7 +80,7 @@ Feature: Member API
 
   Scenario: Remove mainMember from member
 
-  Scenario: Get the mainMember from should return ok
+  Scenario: Get the mainMember should return ok
 
   Scenario: Get the list of familyMembers should return ok
 

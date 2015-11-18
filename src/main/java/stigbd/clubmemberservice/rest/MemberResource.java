@@ -133,4 +133,26 @@ public class MemberResource {
                     .build();
         }
     }
+
+
+    @Path("{id}/familyMember/")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response createFamilyMemberRelation(@PathParam("id") String memberId, MemberIdRepresentation familyMemberIdRepresentation) {
+
+        //logger.log(Level.INFO, "memberId/mainMemberId ->" + memberId + "/" + mainMemberIdRepresentation.getId());
+
+        String id = SERVICE_DEFAULT.createMainMemberRelation(familyMemberIdRepresentation.getId(), memberId);
+        if (id != null) {
+            URI uri = URI.create(id);
+
+            return Response
+                    .created(uri)
+                    .build();
+        } else {
+            return Response
+                    .status(400)
+                    .build();
+        }
+    }
 }

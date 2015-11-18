@@ -21,6 +21,7 @@ public class Member {
     private String mobile;
     private String active;
     private String memberSince;
+    private String email2;
     @Reference
     private Member mainMember;
     @Reference
@@ -114,5 +115,14 @@ public class Member {
     public void setFamilyMembers(List<Member> familyMembers) {
         this.familyMembers = familyMembers;
     }
+
+    public String getEmail2() {
+        return email2;
+    }
+
+    public void setEmail2(String email2) {
+        this.email2 = email2;
+    }
+
 
 }

@@ -18,6 +18,7 @@ public class MemberFactory {
         member.setFirstName(memberRepresentation.getFirstName());
         member.setLastName(memberRepresentation.getLastName());
         member.setEmail(memberRepresentation.getEmail());
+        member.setEmail2(memberRepresentation.getEmail2());
         member.setBirthDate(memberRepresentation.getBirthDate());
         member.setActive(memberRepresentation.getActive());
         member.setBirthDate(memberRepresentation.getBirthDate());
